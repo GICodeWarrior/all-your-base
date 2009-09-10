@@ -1,5 +1,18 @@
 module AllYourBase
   class Are
+    # This charset works for "standard" bases 2-36 and 62.  It also provides
+    # non-standard bases 1 and 37-61 for most uses.
+    BASE_62_CHARSET = (0..9).to_a + ('A'..'Z').to_a + ('a'..'z').to_a
+
+    # This is the base64 encoding charset, but note that this library does not
+    # provide true base64 encoding.
+    BASE_64_CHARSET = ('A'..'Z').to_a + ('a'..'z').to_a + (0..9).to_a +
+                      ['+', '/']
+
+    # This is a maximum URL safe charset (between /'s)
+    BASE_78_CHARSET = BASE_62_CHARSET + ['!', '$', '&', "'", '(', ')', '*', '+',
+                                         ',', '-', '.', ':', ';', '=', '@', '_']
+
     def initialize(charset, radix, options={})
       if charset.size < 1 || charset.size < radix
         raise ArgumentError.new('charset too small: ' << charset.size.to_s)
