@@ -15,7 +15,7 @@ module AllYourBase
 
     def initialize(charset, radix, options={})
       if charset.size < 1 || charset.size < radix
-        raise ArgumentError.new('charset too small: ' << charset.size.to_s)
+        raise ArgumentError.new('charset too small ' << charset.size.to_s)
       elsif base < 1
         raise ArgumentError.new('illegal radix ' << radix.to_s)
       end
@@ -33,7 +33,7 @@ module AllYourBase
       end
 
       if string.size < 1
-        raise ArgumentError.new('string too small: ' << string.size.to_s)
+        raise ArgumentError.new('string too small ' << string.size.to_s)
       end
 
       regexp = Regex.new(@charset.map{|c| Regexp.escape(c)}.join('|'))
