@@ -9,7 +9,8 @@ module AllYourBase
     BASE_64_CHARSET = ('A'..'Z').to_a + ('a'..'z').to_a + (0..9).to_a +
                       ['+', '/']
 
-    # This is a maximum URL safe charset (between /'s)
+    # This is a _maximum_ URL safe charset (between /'s).  Not all sites know
+    # or care about the validity of these characters.
     BASE_78_CHARSET = BASE_62_CHARSET + ['!', '$', '&', "'", '(', ')', '*', '+',
                                          ',', '-', '.', ':', ';', '=', '@', '_']
 
