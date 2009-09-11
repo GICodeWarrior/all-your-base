@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "all-your-base"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Numeric base conversions greater than base 36}
+    gem.description = %Q{TODO}
     gem.email = "GICodeWarrior@gmail.com"
     gem.homepage = "http://github.com/GICodeWarrior/all-your-base"
     gem.authors = ["Rusty Burchfield"]
