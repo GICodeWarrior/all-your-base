@@ -34,6 +34,37 @@ describe AllYourBase::Are do
       ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET)
       ayb.instance_variable_get('@radix').should eql(78)
     end
+    it "should not allow a char set has a - in it, should not allow honor_negation option"
+  end
+  
+  describe "#convert_to_base_10" do
+    before(:each) do
+      @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET)
+    end
+    it "should raise error if string is too short" do
+      lambda {@ayb.convert_to_base_10('')}.should raise_error(ArgumentError, 'string too small 0')
+    end
+    it "should return the base 10 conversion of string" do
+      @ayb.convert_to_base_10('somebody_set_up_us_the_bomb').should eql(855149198991141649141572449638390201857110945891509)
+    end
+    describe "when honor_negation is true" do
+      before(:each) do
+        @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET, 78, {:honor_negation => true})
+      end
+      it "should raise error if string is too short" do
+        lambda {@ayb.convert_to_base_10('-')}.should raise_error(ArgumentError, 'string too small 0')
+      end
+      it "should return a negative integer if string starts with a -" do
+        @ayb.convert_to_base_10('-9').should eql(-9)
+      end
+      it "should return a positive integer if string does not start with a -" do
+        
+      end
+    end
+  end
+  
+  describe "#convert_from_base_10" do
+    
   end
   
 end

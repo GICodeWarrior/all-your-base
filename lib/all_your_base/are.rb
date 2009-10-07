@@ -2,11 +2,11 @@ module AllYourBase
   class Are
     # This charset works for "standard" bases 2-36 and 62.  It also provides
     # non-standard bases 1 and 37-61 for most uses.
-    BASE_62_CHARSET = (0..9).to_a + ('A'..'Z').to_a + ('a'..'z').to_a
+    BASE_62_CHARSET = (0..9).to_a.map{|n|n.to_s} + ('A'..'Z').to_a + ('a'..'z').to_a
 
     # This is the base64 encoding charset, but note that this library does not
     # provide true base64 encoding.
-    BASE_64_CHARSET = ('A'..'Z').to_a + ('a'..'z').to_a + (0..9).to_a +
+    BASE_64_CHARSET = ('A'..'Z').to_a + ('a'..'z').to_a + (0..9).to_a.map{|n|n.to_s} +
                       ['+', '/']
 
     # This is a _maximum_ URL safe charset (between /'s).  Not all sites know
@@ -29,16 +29,15 @@ module AllYourBase
 
     def convert_to_base_10(string)
       negate = false
-      if options[:honor_negation]
-        negate = string[0] == '-'
+      if @options[:honor_negation]
+        negate = string[0...1] == '-'
         string = string[1...string.size]
       end
 
       if string.size < 1
         raise ArgumentError.new('string too small ' << string.size.to_s)
       end
-
-      regexp = Regex.new(@charset.map{|c| Regexp.escape(c)}.join('|'))
+      regexp = Regexp.new(@charset.map{|c| Regexp.escape(c)}.join('|'))
       result = 0
       index = 0
       string.reverse.scan(regexp) do |c|
