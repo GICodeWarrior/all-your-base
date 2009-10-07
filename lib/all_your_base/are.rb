@@ -2,11 +2,11 @@ module AllYourBase
   class Are
     # This charset works for "standard" bases 2-36 and 62.  It also provides
     # non-standard bases 1 and 37-61 for most uses.
-    BASE_62_CHARSET = (0..9).to_a.map{|n|n.to_s} + ('A'..'Z').to_a + ('a'..'z').to_a
+    BASE_62_CHARSET = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a
 
     # This is the base64 encoding charset, but note that this library does not
     # provide true base64 encoding.
-    BASE_64_CHARSET = ('A'..'Z').to_a + ('a'..'z').to_a + (0..9).to_a.map{|n|n.to_s} +
+    BASE_64_CHARSET = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a +
                       ['+', '/']
 
     # This is a _maximum_ URL safe charset (between /'s).  Not all sites know
