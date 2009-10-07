@@ -10,7 +10,7 @@ describe AllYourBase::Are do
   it "should have consistent value for BASE_78_CHARSET" do
     AllYourBase::Are::BASE_78_CHARSET.join(',').should eql("0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,!,$,&,',(,),*,+,,,-,.,:,;,=,@,_")
   end
-  
+
   describe "#initialize" do
     it "should not allow charsets less 1" do
       lambda {ayb = AllYourBase::Are.new([],1)}.should raise_error(ArgumentError, 'charset too small 0')
@@ -34,9 +34,13 @@ describe AllYourBase::Are do
       ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET)
       ayb.instance_variable_get('@radix').should eql(78)
     end
-    it "should not allow a char set has a - in it, should not allow honor_negation option"
+    it "should not allow a char set with - when :honor_negation is set" do
+      lambda {
+        AllYourBase::Are.new(['a', 'y', 'b', '-'], 3, {:honor_negation => true})
+      }.should raise_error(ArgumentError, '"-" is unsupported in charset when honor_negation is set')
+    end
   end
-  
+
   describe "#convert_to_base_10" do
     before(:each) do
       @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET)
@@ -49,22 +53,21 @@ describe AllYourBase::Are do
     end
     describe "when honor_negation is true" do
       before(:each) do
-        @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET, 78, {:honor_negation => true})
+        @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_62_CHARSET, 62, {:honor_negation => true})
       end
       it "should raise error if string is too short" do
         lambda {@ayb.convert_to_base_10('-')}.should raise_error(ArgumentError, 'string too small 0')
       end
       it "should return a negative integer if string starts with a -" do
-        @ayb.convert_to_base_10('-9').should eql(-9)
+        @ayb.convert_to_base_10('-A').should eql(-10)
       end
       it "should return a positive integer if string does not start with a -" do
-        
+        @ayb.convert_to_base_10('A').should eql(10)
       end
     end
   end
-  
+
   describe "#convert_from_base_10" do
     
   end
-  
 end

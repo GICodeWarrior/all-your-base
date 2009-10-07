@@ -20,6 +20,8 @@ module AllYourBase
         raise ArgumentError.new('charset too small ' << charset.size.to_s)
       elsif radix < 1
         raise ArgumentError.new('illegal radix ' << radix.to_s)
+      elsif charset.include?('-') && options[:honor_negation]
+        raise ArgumentError.new('"-" is unsupported in charset when honor_negation is set')
       end
 
       @charset = charset
@@ -31,7 +33,7 @@ module AllYourBase
       negate = false
       if @options[:honor_negation]
         negate = string[0...1] == '-'
-        string = string[1...string.size]
+        string = string[1...string.size] if negate
       end
 
       if string.size < 1
