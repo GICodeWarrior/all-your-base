@@ -66,7 +66,7 @@ module AllYourBase
         end
         result = s.reverse
       end
-      return ((negate ? '-', '') << result)
+      return ((negate ? '-' : '') << result)
     end
   end
 end
