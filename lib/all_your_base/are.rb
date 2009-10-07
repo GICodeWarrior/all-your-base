@@ -14,10 +14,11 @@ module AllYourBase
     BASE_78_CHARSET = BASE_62_CHARSET + ['!', '$', '&', "'", '(', ')', '*', '+',
                                          ',', '-', '.', ':', ';', '=', '@', '_']
 
-    def initialize(charset, radix, options={})
+    def initialize(charset, radix=nil, options={})
+      radix ||= charset.size
       if charset.size < 1 || charset.size < radix
         raise ArgumentError.new('charset too small ' << charset.size.to_s)
-      elsif base < 1
+      elsif radix < 1
         raise ArgumentError.new('illegal radix ' << radix.to_s)
       end
 
