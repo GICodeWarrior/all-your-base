@@ -28,7 +28,7 @@ module AllYourBase
       @radix = radix
       @options = options
     end
-    
+
     def convert_to_base_10(string)
       negate = false
       if @options[:honor_negation]

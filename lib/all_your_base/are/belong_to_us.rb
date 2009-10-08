@@ -9,4 +9,3 @@ module AllYourBase
       def self.are
         @are ||= Are.new(BASE_62_CHARSET)
 
-
