@@ -68,6 +68,21 @@ describe AllYourBase::Are do
   end
 
   describe "#convert_from_base_10" do
-    
+    it "should return '0' if value is 0" do
+      @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET)
+      @ayb.convert_from_base_10(0).should eql('0')
+    end
+    it "should return a string with a - at the beginning if value is negative and negation is honored" do
+      @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_64_CHARSET, 64, {:honor_negation => true})
+      @ayb.convert_from_base_10(-100).should eql('-Bk')
+    end
+    it "should return value if radix is 1" do
+      @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_64_CHARSET, 1)
+      @ayb.convert_from_base_10(11).should eql('AAAAAAAAAAA')
+    end
+    it "should return other value if radix is not 1" do
+      @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_64_CHARSET, 12)
+      @ayb.convert_from_base_10(11).should eql('L')
+    end
   end
 end
