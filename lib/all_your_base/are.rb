@@ -14,18 +14,17 @@ module AllYourBase
     BASE_78_CHARSET = BASE_62_CHARSET + ['!', '$', '&', "'", '(', ')', '*', '+',
                                          ',', '-', '.', ':', ';', '=', '@', '_']
 
-    def initialize(charset, radix=nil, options={})
-      radix ||= charset.size
-      if charset.size < 1 || charset.size < radix
+    def initialize(charset, options={})
+      options[:radix] ||= charset.size
+      if charset.size < 1 || charset.size < options[:radix]
         raise ArgumentError.new('charset too small ' << charset.size.to_s)
-      elsif radix < 1
-        raise ArgumentError.new('illegal radix ' << radix.to_s)
+      elsif options[:radix] < 1
+        raise ArgumentError.new('illegal radix ' << options[:radix].to_s)
       elsif charset.include?('-') && options[:honor_negation]
         raise ArgumentError.new('"-" is unsupported in charset when honor_negation is set')
       end
 
       @charset = charset
-      @radix = radix
       @options = options
     end
     
@@ -43,7 +42,7 @@ module AllYourBase
       result = 0
       index = 0
       string.reverse.scan(regexp) do |c|
-        result += @charset.index(c) * (@radix ** index)
+        result += @charset.index(c) * (@options[:radix] ** index)
         index += 1
       end
       return result * (negate ? -1 : 1)
@@ -58,13 +57,13 @@ module AllYourBase
       end
       int = int.abs
 
-      if @radix == 1
+      if @options[:radix] == 1
         result = @charset.first * int
       else
         s = ''
         while int > 0
-          s << @charset[int.modulo(@radix)]
-          int /= @radix
+          s << @charset[int.modulo(@options[:radix])]
+          int /= @options[:radix]
         end
         result = s.reverse
       end
