@@ -47,7 +47,17 @@ module AllYourBase
       end
       return result * (negate ? -1 : 1)
     end
-
+    
+    def self.convert_to_base_10(string, charset, options={})
+      ayb = self.new(charset, options)
+      ayb.convert_to_base_10(string)
+    end
+    
+    def self.convert_from_base_10(int, charset, options={})
+      ayb = self.new(charset, options)
+      ayb.convert_from_base_10(int)
+    end
+    
     def convert_from_base_10(int)
       return '0' if int == 0
 

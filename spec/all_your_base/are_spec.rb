@@ -81,4 +81,17 @@ describe AllYourBase::Are do
       @ayb.convert_from_base_10(11).should eql('L')
     end
   end
+  
+  describe ".convert_to_base_10" do
+    it "should allow you to convert to base 10 without initializing an instance of AllYourBase::Are" do
+      result = AllYourBase::Are.convert_to_base_10('foo', AllYourBase::Are::BASE_64_CHARSET, {:radix => 11})
+      result.should eql(4231)
+    end
+  end
+  describe ".convert_from_base_10" do
+    it "should allow you to convert from base 10 without initializing an instance of AllYourBase::Are" do
+      result = AllYourBase::Are.convert_from_base_10(4231, AllYourBase::Are::BASE_64_CHARSET, {:radix => 11})
+      result.should eql('DBKH')
+    end
+  end
 end
