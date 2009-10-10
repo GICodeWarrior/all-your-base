@@ -34,7 +34,10 @@ module AllYourBase::To
         AllYourBase::Are::BASE_64_CHARSET
       when 78
         AllYourBase::Are::BASE_78_CHARSET
+      else
+        AllYourBase::Are::BASE_78_CHARSET[0...@from_base]
     end
+    
     ayb = AllYourBase::Are.new(base_charset)
     ayb.convert_to_base_10(@val)
   end
