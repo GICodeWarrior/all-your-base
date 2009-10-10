@@ -36,4 +36,4 @@ module AllYourBase::To
     ayb.convert_to_base_10(@val)
   end
 end
-AllYourBase::Converter.send(:include, AllYourBase::To)
+AllYourBase::Converter.send :include, AllYourBase::To
