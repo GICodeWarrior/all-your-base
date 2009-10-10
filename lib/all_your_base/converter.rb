@@ -9,10 +9,14 @@ module AllYourBase
   end
   
   module StringExtension
-    
-    def from_base_64
-      AllYourBase::Converter.new self, 64
+    def method_missing(sym, *args, &block)
+      if match = /from_base_([0-9])*/.match(sym.to_s)
+        AllYourBase::Converter.new self, sym.to_s.split('_').last.to_i
+      else
+        super # NoMethodError
+      end
     end
+    
   end
   
   def register(mod)
@@ -23,7 +27,15 @@ end
 
 module AllYourBase::To
   def to_base_10
-    ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_64_CHARSET)
+    base_charset = case @from_base
+      when 62
+        AllYourBase::Are::BASE_62_CHARSET
+      when 64
+        AllYourBase::Are::BASE_64_CHARSET
+      when 78
+        AllYourBase::Are::BASE_78_CHARSET
+    end
+    ayb = AllYourBase::Are.new(base_charset)
     ayb.convert_to_base_10(@val)
   end
 end

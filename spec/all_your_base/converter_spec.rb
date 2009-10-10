@@ -12,9 +12,11 @@ describe AllYourBase::Converter do
     end
   end
   
-  #describe "method_missing" do
-  #  it "should allow me to use any base that we have specified in our config" do
-  #    converter = "foo".from_base_78
-  #  end
-  #end
+  describe "method_missing" do
+    it "should allow me to use any base" do
+      converter = "foo".from_base_11
+      converter.from_base.should eql(11)
+      converter.val.should eql('foo')
+    end
+  end
 end
