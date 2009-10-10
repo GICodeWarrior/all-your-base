@@ -12,6 +12,13 @@ describe AllYourBase::Converter do
     end
   end
   
+  describe "#to_s" do
+    it "should be able to pretend as a string still" do
+      "foo".from_base_64.to_s.should eql('foo')
+      "foo".from_base_64.to_s.class.should eql(String)
+    end
+  end
+  
   describe "method_missing" do
     it "should allow me to use any base" do
       converter = "foo".from_base_11
