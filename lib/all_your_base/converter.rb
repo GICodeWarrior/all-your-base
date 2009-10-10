@@ -16,13 +16,7 @@ module AllYourBase
         super # NoMethodError
       end
     end
-    
   end
-  
-  def register(mod)
-    AllYourBase::Converter.send :include, mod
-  end
-  module_function :register
 end
 
 module AllYourBase::To
@@ -42,4 +36,4 @@ module AllYourBase::To
     ayb.convert_to_base_10(@val)
   end
 end
-AllYourBase.register AllYourBase::To
+AllYourBase::Converter.send(:include, AllYourBase::To)
