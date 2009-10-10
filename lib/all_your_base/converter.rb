@@ -9,6 +9,7 @@ module AllYourBase
   end
   
   module StringExtension
+    
     def from_base_64
       AllYourBase::Converter.new self, 64
     end
