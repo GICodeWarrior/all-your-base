@@ -1,5 +1,6 @@
 module AllYourBase
   class Are
+    
     # This charset works for "standard" bases 2-36 and 62.  It also provides
     # non-standard bases 1 and 37-61 for most uses.
     BASE_62_CHARSET = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a
@@ -13,7 +14,7 @@ module AllYourBase
     # or care about the validity of these characters.
     BASE_78_CHARSET = BASE_62_CHARSET + ['!', '$', '&', "'", '(', ')', '*', '+',
                                          ',', '-', '.', ':', ';', '=', '@', '_']
-
+    
     def initialize(charset, options={})
       options[:radix] ||= charset.size
       if charset.size < 1 || charset.size < options[:radix]
