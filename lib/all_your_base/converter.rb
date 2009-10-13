@@ -1,11 +1,16 @@
 module AllYourBase
   class Converter
-    attr_reader :val, :from_base
+    attr_reader :str, :from_base
     
-    def initialize(val, from_base)
-      @val = val
+    def initialize(str, from_base)
+      @str = str
       @from_base = from_base
     end
+    
+    def to_str
+      @str
+    end
+    alias :to_s :to_str
   end
   
   module StringExtension
@@ -16,13 +21,7 @@ module AllYourBase
         super # NoMethodError
       end
     end
-    
   end
-  
-  def register(mod)
-    AllYourBase::Converter.send :include, mod
-  end
-  module_function :register
 end
 
 module AllYourBase::To
@@ -39,7 +38,7 @@ module AllYourBase::To
     end
     
     ayb = AllYourBase::Are.new(base_charset)
-    ayb.convert_to_base_10(@val)
+    ayb.convert_to_base_10(@str)
   end
 end
-AllYourBase.register AllYourBase::To
+AllYourBase::Converter.send :include, AllYourBase::To

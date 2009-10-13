@@ -8,7 +8,14 @@ describe AllYourBase::Converter do
     it "should return a Converter with the val and original base set" do
       converter = "foo".from_base_64
       converter.from_base.should eql(64)
-      converter.val.should eql('foo')
+      converter.str.should eql('foo')
+    end
+  end
+  
+  describe "#to_s" do
+    it "should be able to pretend as a string still" do
+      "foo".from_base_64.to_s.should eql('foo')
+      "foo".from_base_64.to_s.class.should eql(String)
     end
   end
   
@@ -16,7 +23,7 @@ describe AllYourBase::Converter do
     it "should allow me to use any base" do
       converter = "foo".from_base_11
       converter.from_base.should eql(11)
-      converter.val.should eql('foo')
+      converter.str.should eql('foo')
     end
   end
   
