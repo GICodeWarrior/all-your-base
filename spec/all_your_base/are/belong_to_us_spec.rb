@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 require 'all_your_base/are/belong_to_us'
 
 describe AllYourBase::Are::BelongToUs::From do
