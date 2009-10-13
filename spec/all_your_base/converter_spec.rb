@@ -1,37 +1,34 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'all_your_base/are/belong_to_us'
 
-describe AllYourBase::Converter do
-  describe "#from_base_64" do
-    it "should return the proper object type" do
-      "foo".from_base_64.class.should eql(AllYourBase::Converter)
-    end
-    it "should return a Converter with the val and original base set" do
-      converter = "foo".from_base_64
-      converter.from_base.should eql(64)
-      converter.str.should eql('foo')
-    end
+describe AllYourBase::Are::BelongToUs::From do
+  it "should convert string to base 10" do
+    'foo'.from_base_61.should eql(155661)
   end
-  
-  describe "#to_s" do
-    it "should be able to pretend as a string still" do
-      "foo".from_base_64.to_s.should eql('foo')
-      "foo".from_base_64.to_s.class.should eql(String)
-    end
+
+  it "should convert integer to base 10" do
+    112233.from_base_61.should eql(858903732)
   end
+  it "should raise if the base is over 78"
+  it "should raise if the base is 0"
+end
   
-  describe "method_missing" do
-    it "should allow me to use any base" do
-      converter = "foo".from_base_11
-      converter.from_base.should eql(11)
-      converter.str.should eql('foo')
-    end
+describe AllYourBase::Are::BelongToUs::To do
+  it "should convert string from base 10" do
+    '155661'.to_base_61.should eql('foo')
   end
-  
-  describe "#to_base_10" do
-    it "should allow me to convert to base 10" do
-      "foo".from_base_64.to_base_10.should eql(129576)
-      "foo".from_base_62.to_base_10.should eql(160754)
-    end
+  it "should convert integer from base 10" do
+    155661.to_base_61.should eql('foo')
   end
-  
+  it "should raise if the base is over 78"
+  it "should raise if the base is 0"
+end
+
+describe AllYourBase::Are::BelongToUs do
+  it "should do complex conversions" do
+    'foo'.from_base_64.to_base_14.should eql('46558')
+  end
+  it "should allow you to do stupid stuff" do
+    'foo'.from_base_78.to_base_14.from_base_14.to_base_78.should eql('foo')
+  end
 end
