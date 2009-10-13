@@ -39,6 +39,9 @@ module AllYourBase
       if string.size < 1
         raise ArgumentError.new('string too small ' << string.size.to_s)
       end
+      if !string.match(/\A[#{Regexp.escape(@charset[0...@options[:radix]].join(''))}]+\Z/)
+        raise ArgumentError.new('invalid characters')
+      end
       regexp = Regexp.new(@charset.map{|c| Regexp.escape(c)}.join('|'))
       result = 0
       index = 0
@@ -60,6 +63,10 @@ module AllYourBase
     end
     
     def convert_from_base_10(int)
+      if !int.to_s.match(/\A-?[0-9]+\Z/)
+        raise ArgumentError.new('invalid characters')
+      end
+      int = int.to_i
       return '0' if int == 0
 
       negate = false
@@ -67,7 +74,7 @@ module AllYourBase
         negate = int < 0
       end
       int = int.abs
-
+      
       if @options[:radix] == 1
         result = @charset.first * int
       else

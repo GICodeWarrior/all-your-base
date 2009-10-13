@@ -41,6 +41,10 @@ describe AllYourBase::Are do
     before(:each) do
       @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET)
     end
+    it "should raise if input is contains invalid characters" do
+      ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET, {:radix => 5})
+      lambda {ayb.convert_to_base_10('foo')}.should raise_error("invalid characters")
+    end
     it "should raise error if string is too short" do
       lambda {@ayb.convert_to_base_10('')}.should raise_error(ArgumentError, 'string too small 0')
     end
@@ -64,6 +68,14 @@ describe AllYourBase::Are do
   end
 
   describe "#convert_from_base_10" do
+    it "should raise if input is not base 10" do
+      ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET, {:radix => 5})
+      lambda {ayb.convert_from_base_10('foo')}.should raise_error("invalid characters")
+    end
+    it "should convert from base 10" do
+      @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET)
+      @ayb.convert_from_base_10(855149198991141649141572449638390201857110945891509).should eql('somebody_set_up_us_the_bomb')
+    end
     it "should return '0' if value is 0" do
       @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET)
       @ayb.convert_from_base_10(0).should eql('0')
@@ -84,14 +96,14 @@ describe AllYourBase::Are do
   
   describe ".convert_to_base_10" do
     it "should allow you to convert to base 10 without initializing an instance of AllYourBase::Are" do
-      result = AllYourBase::Are.convert_to_base_10('foo', AllYourBase::Are::BASE_64_CHARSET, {:radix => 11})
-      result.should eql(4231)
+      result = AllYourBase::Are.convert_to_base_10('A', AllYourBase::Are::BASE_78_CHARSET)
+      result.should eql(10)
     end
   end
   describe ".convert_from_base_10" do
     it "should allow you to convert from base 10 without initializing an instance of AllYourBase::Are" do
-      result = AllYourBase::Are.convert_from_base_10(4231, AllYourBase::Are::BASE_64_CHARSET, {:radix => 11})
-      result.should eql('DBKH')
+      result = AllYourBase::Are.convert_from_base_10(10, AllYourBase::Are::BASE_78_CHARSET)
+      result.should eql('A')
     end
   end
 end
