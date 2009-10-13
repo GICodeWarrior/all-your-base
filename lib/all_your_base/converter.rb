@@ -10,8 +10,8 @@ module AllYourBase
   
   module StringExtension
     def method_missing(sym, *args, &block)
-      if match = /from_base_([0-9])*/.match(sym.to_s)
-        AllYourBase::Converter.new self, sym.to_s.split('_').last.to_i
+      if sym.to_s.match(/\Afrom_base_([0-9]+)\Z/)
+        AllYourBase::Converter.new self, $1.to_i
       else
         super # NoMethodError
       end
