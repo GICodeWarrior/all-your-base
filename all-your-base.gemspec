@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{all-your-base}
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rusty Burchfield"]
-  s.date = %q{2009-09-11}
+  s.date = %q{2009-10-13}
   s.description = %q{TODO}
   s.email = %q{GICodeWarrior@gmail.com}
   s.extra_rdoc_files = [
@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     "AllYourBaseAnimated.gif",
      "LICENSE",
      "README.rdoc",
      "Rakefile",
@@ -27,17 +28,19 @@ Gem::Specification.new do |s|
      "lib/all_your_base.rb",
      "lib/all_your_base/are.rb",
      "lib/all_your_base/are/belong_to_us.rb",
-     "spec/all-your-base_spec.rb",
+     "spec/all_your_base/are/belong_to_us_spec.rb",
+     "spec/all_your_base/are_spec.rb",
      "spec/spec_helper.rb"
   ]
   s.homepage = %q{http://github.com/GICodeWarrior/all-your-base}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.4}
   s.summary = %q{Numeric base conversions greater than base 36}
   s.test_files = [
-    "spec/all-your-base_spec.rb",
-     "spec/spec_helper.rb"
+    "spec/spec_helper.rb",
+     "spec/all_your_base/are/belong_to_us_spec.rb",
+     "spec/all_your_base/are_spec.rb"
   ]
 
   if s.respond_to? :specification_version then
