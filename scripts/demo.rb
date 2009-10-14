@@ -21,7 +21,8 @@ code = {'Instance Methods' =>
 'Fun Stuff!' =>
 ['  "foo".from_base_78.to_base_32',
 '  100011.from_base_3.to_base_11',
-'  "foo".from_base_56.from_base_7.to_base_8.to_base_72']}
+'  "foo".from_base_56.from_base_7.to_base_8.to_base_72',
+'  "Zero".from_base_57.from_base_12.to_base_13.to_base_50']}
 
 sections.each do |s|
   print "\e[H\e[2J"
