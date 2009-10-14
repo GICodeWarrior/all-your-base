@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rusty Burchfield"]
-  s.date = %q{2009-10-13}
-  s.description = %q{TODO}
+  s.date = %q{2009-10-14}
+  s.description = %q{Provides numeric base conversions greater than base 36}
   s.email = %q{GICodeWarrior@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -35,7 +35,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/GICodeWarrior/all-your-base}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.4}
+  s.rubygems_version = %q{1.3.5}
   s.summary = %q{Numeric base conversions greater than base 36}
   s.test_files = [
     "spec/spec_helper.rb",

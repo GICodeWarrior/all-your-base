@@ -6,13 +6,14 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "all-your-base"
     gem.summary = %Q{Numeric base conversions greater than base 36}
-    gem.description = %Q{TODO}
+    gem.description = %Q{Provides numeric base conversions greater than base 36}
     gem.email = "GICodeWarrior@gmail.com"
     gem.homepage = "http://github.com/GICodeWarrior/all-your-base"
     gem.authors = ["Rusty Burchfield"]
     gem.add_development_dependency "rspec"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
+  Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
 end
