@@ -76,13 +76,13 @@ module AllYourBase
     end
 
     def self.convert_to_base_10(string, options={})
-      ayb = self.new(options)
-      ayb.convert_to_base_10(string)
+      @@ayb ||= self.new
+      @@ayb.convert_to_base_10(string, options)
     end
 
     def self.convert_from_base_10(int, options={})
-      ayb = self.new(options)
-      ayb.convert_from_base_10(int)
+      @@ayb ||= self.new
+      @@ayb.convert_from_base_10(int, options)
     end
 
     private
