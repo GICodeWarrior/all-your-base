@@ -19,8 +19,11 @@ To use the simple Integer and String extensions:
 
 == Use it
 
+All of the instance and class methods, including "new" accept an options hash.
+It can contain :charset, :radix, and :honor_negation.
+
 Instance Methods
- @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET)
+ @ayb = AllYourBase::Are.new
  %w(foo bar muffin).map do |word|
    "#{word} in base 10 is: #{@ayb.convert_to_base_10(word)}"
  end
@@ -36,10 +39,10 @@ Instance Methods
  => 140676922357 from base 10 is: muffin
 
 Class Methods
- AllYourBase::Are.convert_to_base_10("foo", AllYourBase::Are::BASE_78_CHARSET)
+ AllYourBase::Are.convert_to_base_10("foo")
  => 253394
 
- AllYourBase::Are.convert_from_base_10(140676922357, AllYourBase::Are::BASE_78_CHARSET)
+ AllYourBase::Are.convert_from_base_10(140676922357)
  => "muffin"
 
 Fun Stuff!

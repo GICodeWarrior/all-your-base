@@ -6,7 +6,7 @@ require 'all_your_base/are/belong_to_us'
 sections = ['Instance Methods', 'Class Methods', 'Fun Stuff!']
 
 code = {'Instance Methods' =>
-['  @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET)
+['  @ayb = AllYourBase::Are.new
   %w(foo bar muffin).map do |word|
     "#{word} in base 10 is: #{@ayb.convert_to_base_10(word)}"
   end',
@@ -15,8 +15,8 @@ code = {'Instance Methods' =>
   end'],
 
 'Class Methods' =>
-['  AllYourBase::Are.convert_to_base_10("foo", AllYourBase::Are::BASE_78_CHARSET)',
-'  AllYourBase::Are.convert_from_base_10(140676922357, AllYourBase::Are::BASE_78_CHARSET)'],
+['  AllYourBase::Are.convert_to_base_10("foo")',
+'  AllYourBase::Are.convert_from_base_10(140676922357)'],
 
 'Fun Stuff!' =>
 ['  "foo".from_base_78.to_base_32',
