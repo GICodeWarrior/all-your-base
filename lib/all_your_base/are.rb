@@ -1,6 +1,6 @@
 module AllYourBase
   class Are
-    
+
     # This charset works for "standard" bases 2-36 and 62.  It also provides
     # non-standard bases 1 and 37-61 for most uses.
     BASE_62_CHARSET = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a
@@ -14,7 +14,7 @@ module AllYourBase
     # or care about the validity of these characters.
     BASE_78_CHARSET = BASE_62_CHARSET + ['!', '$', '&', "'", '(', ')', '*', '+',
                                          ',', '-', '.', ':', ';', '=', '@', '_']
-    
+
     def initialize(charset, options={})
       options[:radix] ||= charset.size
       if charset.size < 1 || charset.size < options[:radix]
@@ -51,17 +51,17 @@ module AllYourBase
       end
       return result * (negate ? -1 : 1)
     end
-    
+
     def self.convert_to_base_10(string, charset, options={})
       ayb = self.new(charset, options)
       ayb.convert_to_base_10(string)
     end
-    
+
     def self.convert_from_base_10(int, charset, options={})
       ayb = self.new(charset, options)
       ayb.convert_from_base_10(int)
     end
-    
+
     def convert_from_base_10(int)
       if !int.to_s.match(/\A-?[0-9]+\Z/)
         raise ArgumentError.new('invalid characters')
@@ -74,7 +74,7 @@ module AllYourBase
         negate = int < 0
       end
       int = int.abs
-      
+
       if @options[:radix] == 1
         result = @charset.first * int
       else
