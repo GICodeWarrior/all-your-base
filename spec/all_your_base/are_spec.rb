@@ -13,36 +13,32 @@ describe AllYourBase::Are do
 
   describe "#initialize" do
     it "should not allow charsets less 1" do
-      lambda {ayb = AllYourBase::Are.new([], {:radix =>1})}.should raise_error(ArgumentError, 'charset too small 0')
+      lambda {ayb = AllYourBase::Are.new({:charset => [], :radix => 1})}.should raise_error(ArgumentError, 'charset too small 0')
     end
     it "should not allow radix of less than 1" do
-      lambda {ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET, {:radix =>0})}.should raise_error(ArgumentError, 'illegal radix 0')
+      lambda {ayb = AllYourBase::Are.new({:radix => 0})}.should raise_error(ArgumentError, 'illegal radix 0')
     end
-    it "should set the charset instance variable" do
-      ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET, {:radix =>78})
-      ayb.instance_variable_get('@charset').should eql(AllYourBase::Are::BASE_78_CHARSET)
-    end
-    it "should set the options instance variable" do
-      ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET, {:radix => 12})
-      ayb.instance_variable_get('@options').should == {:radix => 12}
+    it "should default charset to base 78" do
+      ayb = AllYourBase::Are.new()
+      ayb.instance_variable_get('@default_options')[:charset].should eql(AllYourBase::Are::BASE_78_CHARSET)
     end
     it "should default radix to size of charset" do
-      ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET)
-      ayb.instance_variable_get('@options')[:radix].should eql(78)
+      ayb = AllYourBase::Are.new({:charset => [1, 2, 3]})
+      ayb.instance_variable_get('@default_options')[:radix].should eql(3)
     end
     it "should not allow a char set with - when :honor_negation is set" do
       lambda {
-        AllYourBase::Are.new(['a', 'y', 'b', '-'], {:honor_negation => true})
+        AllYourBase::Are.new({:charset => ['a', 'y', 'b', '-'], :honor_negation => true})
       }.should raise_error(ArgumentError, '"-" is unsupported in charset when honor_negation is set')
     end
   end
 
   describe "#convert_to_base_10" do
     before(:each) do
-      @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET)
+      @ayb = AllYourBase::Are.new()
     end
     it "should raise if input is contains invalid characters" do
-      ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET, {:radix => 5})
+      ayb = AllYourBase::Are.new({:radix => 5})
       lambda {ayb.convert_to_base_10('foo')}.should raise_error("invalid characters")
     end
     it "should raise error if string is too short" do
@@ -53,7 +49,7 @@ describe AllYourBase::Are do
     end
     describe "when honor_negation is true" do
       before(:each) do
-        @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_62_CHARSET, {:honor_negation => true})
+        @ayb = AllYourBase::Are.new({:charset => AllYourBase::Are::BASE_62_CHARSET, :honor_negation => true})
       end
       it "should raise error if string is too short" do
         lambda {@ayb.convert_to_base_10('-')}.should raise_error(ArgumentError, 'string too small 0')
@@ -69,40 +65,40 @@ describe AllYourBase::Are do
 
   describe "#convert_from_base_10" do
     it "should raise if input is not base 10" do
-      ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET, {:radix => 5})
+      ayb = AllYourBase::Are.new({:radix => 5})
       lambda {ayb.convert_from_base_10('foo')}.should raise_error("invalid characters")
     end
     it "should convert from base 10" do
-      @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET)
+      @ayb = AllYourBase::Are.new()
       @ayb.convert_from_base_10(855149198991141649141572449638390201857110945891509).should eql('somebody_set_up_us_the_bomb')
     end
     it "should return '0' if value is 0" do
-      @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_78_CHARSET)
+      @ayb = AllYourBase::Are.new()
       @ayb.convert_from_base_10(0).should eql('0')
     end
     it "should return a string with a - at the beginning if value is negative and negation is honored" do
-      @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_64_CHARSET, {:honor_negation => true})
+      @ayb = AllYourBase::Are.new({:charset => AllYourBase::Are::BASE_64_CHARSET, :honor_negation => true})
       @ayb.convert_from_base_10(-100).should eql('-Bk')
     end
     it "should return value if radix is 1" do
-      @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_64_CHARSET, {:radix =>1})
+      @ayb = AllYourBase::Are.new({:charset => AllYourBase::Are::BASE_64_CHARSET, :radix =>1})
       @ayb.convert_from_base_10(11).should eql('AAAAAAAAAAA')
     end
     it "should return other value if radix is not 1" do
-      @ayb = AllYourBase::Are.new(AllYourBase::Are::BASE_64_CHARSET,{:radix =>12})
+      @ayb = AllYourBase::Are.new({:charset => AllYourBase::Are::BASE_64_CHARSET, :radix => 12})
       @ayb.convert_from_base_10(11).should eql('L')
     end
   end
   
   describe ".convert_to_base_10" do
     it "should allow you to convert to base 10 without initializing an instance of AllYourBase::Are" do
-      result = AllYourBase::Are.convert_to_base_10('A', AllYourBase::Are::BASE_78_CHARSET)
+      result = AllYourBase::Are.convert_to_base_10('A')
       result.should eql(10)
     end
   end
   describe ".convert_from_base_10" do
     it "should allow you to convert from base 10 without initializing an instance of AllYourBase::Are" do
-      result = AllYourBase::Are.convert_from_base_10(10, AllYourBase::Are::BASE_78_CHARSET)
+      result = AllYourBase::Are.convert_from_base_10(10)
       result.should eql('A')
     end
   end
