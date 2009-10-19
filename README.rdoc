@@ -1,6 +1,8 @@
 = all-your-base
 
 All your base provides arbitrary base conversion.
+ Build: http://runcoderun.com/GICodeWarrior/all-your-base
+ Gem: http://gemcutter.org/gems/all-your-base
 
 == Get it
 
